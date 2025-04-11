@@ -37,7 +37,7 @@ h2 {
     font-size: 1.5rem;
 }
 
-.upload-section, .conversion-options, .result-section, .error-section {
+.upload-section, .conversion-options, .result-section {
     margin-bottom: 2rem;
 }
 
@@ -51,11 +51,6 @@ h2 {
 }
 
 .upload-box:hover {
-    border-color: #2980b9;
-    background-color: #f7fbff;
-}
-
-.upload-box.highlight {
     border-color: #2980b9;
     background-color: #f7fbff;
 }
@@ -94,6 +89,20 @@ h2 {
     word-break: break-all;
 }
 
+.file-info {
+    font-weight: normal;
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    margin-top: 0.5rem;
+}
+
+.file-warning {
+    color: #e67e22;
+    font-size: 0.9rem;
+    font-weight: normal;
+    margin-top: 0.5rem;
+}
+
 .option {
     margin-bottom: 1.5rem;
 }
@@ -113,7 +122,7 @@ select {
     font-size: 1rem;
 }
 
-.convert-btn, .download-btn, .retry-btn {
+.convert-btn, .download-btn {
     background-color: #3498db;
     color: white;
     border: none;
@@ -127,7 +136,7 @@ select {
     text-align: center;
 }
 
-.convert-btn:hover, .download-btn:hover, .retry-btn:hover {
+.convert-btn:hover, .download-btn:hover {
     background-color: #2980b9;
 }
 
@@ -173,6 +182,23 @@ select {
     margin-bottom: 1rem;
 }
 
+.error-message {
+    background-color: #ffeaea;
+    border-left: 4px solid #e74c3c;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 0 5px 5px 0;
+    color: #c0392b;
+    font-size: 0.95rem;
+    position: relative;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
@@ -183,44 +209,6 @@ footer {
     text-align: center;
     color: #7f8c8d;
     font-size: 0.9rem;
-}
-
-.error-section {
-    background-color: #ffebee;
-    border-radius: 10px;
-    padding: 1.5rem;
-    border-left: 4px solid #e74c3c;
-    position: relative;
-}
-
-.error-message {
-    color: #c0392b;
-    padding-right: 30px;
-}
-
-.error-close {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: none;
-    border: none;
-    color: #c0392b;
-    cursor: pointer;
-    font-size: 1.2rem;
-    padding: 5px;
-}
-
-.format-support-info {
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    padding: 1rem;
-    margin-top: 1rem;
-    font-size: 0.9rem;
-}
-
-.format-support-info h3 {
-    margin-bottom: 0.5rem;
-    font-size: 1rem;
 }
 
 @media screen and (max-width: 600px) {
