@@ -1,84 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Audio Converter</title>
-  <link rel="stylesheet" href="styles.css">
-  <script type="importmap">
-    {
-      "imports": {
-        "@ffmpeg/ffmpeg": "https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js",
-        "@ffmpeg/core": "https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.11.0/dist/ffmpeg-core.js"
-      }
-    }
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Converter</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Audio Converter</h1>
-      <p>Convert your audio files to different formats easily</p>
-    </header>
-    
-    <main>
-      <div class="upload-area" id="dropZone">
-        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-          <polyline points="17 8 12 3 7 8"></polyline>
-          <line x1="12" y1="3" x2="12" y2="15"></line>
-        </svg>
-        <h3>Drag & Drop your audio file here</h3>
-        <p>or</p>
-        <label for="fileInput" class="button">Choose File</label>
-        <input type="file" id="fileInput" accept="audio/*" hidden>
-      </div>
-
-      <div class="file-info" id="fileInfo" style="display: none;">
-        <h3>Selected File:</h3>
-        <p id="fileName">No file selected</p>
-        <p id="fileSize">Size: 0 KB</p>
-        <p id="fileType">Type: Unknown</p>
-      </div>
-
-      <div class="conversion-options" id="conversionOptions" style="display: none;">
-        <h3>Convert to:</h3>
-        <select id="formatSelect">
-          <option value="mp3">MP3</option>
-          <option value="wav">WAV</option>
-          <option value="ogg">OGG</option>
-          <option value="m4a">M4A</option>
-          <option value="flac">FLAC</option>
-        </select>
-        <button id="convertBtn" class="button primary">Convert</button>
-      </div>
-
-      <div class="progress-container" id="progressContainer" style="display: none;">
-        <h3>Converting...</h3>
-        <div class="progress-bar">
-          <div id="progressBar"></div>
+    <div class="container">
+        <h1>Audio Converter</h1>
+        <div class="upload-section">
+            <div class="upload-box" id="dropZone">
+                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <p>Drag & drop your audio file or</p>
+                <label for="fileInput" class="file-label">Choose File</label>
+                <input type="file" id="fileInput" accept="audio/*" class="file-input">
+                <p id="fileName" class="file-name"></p>
+            </div>
         </div>
-        <p id="progressText">0%</p>
-      </div>
 
-      <div class="result" id="resultContainer" style="display: none;">
-        <h3>Conversion Complete!</h3>
-        <button id="downloadBtn" class="button success">Download Converted File</button>
-      </div>
+        <div class="error-section" id="errorSection" style="display: none;">
+            <button id="errorClose" class="error-close">×</button>
+            <p id="errorMessage" class="error-message"></p>
+        </div>
 
-      <div id="error" class="error" style="display: none;">
-        <h3>Error</h3>
-        <p id="errorMessage"></p>
-      </div>
-    </main>
+        <div class="conversion-options" id="conversionOptions" style="display: none;">
+            <h2>Conversion Options</h2>
+            <div class="option">
+                <label for="formatSelect">Convert to:</label>
+                <select id="formatSelect">
+                    <!-- Options will be populated by JavaScript based on browser support -->
+                </select>
+            </div>
+            <div class="browser-note">Note: Available formats depend on your browser's capabilities.</div>
+            <button id="convertBtn" class="convert-btn">Convert</button>
+            
+            <div class="format-support-info">
+                <h3>About Format Support</h3>
+                <p>Different browsers support different audio formats. If you encounter errors, please try another format or use a different browser.</p>
+            </div>
+        </div>
+
+        <div class="result-section" id="resultSection" style="display: none;">
+            <h2>Conversion Complete</h2>
+            <div class="result-info">
+                <p>Your file has been converted successfully!</p>
+                <div class="download-container">
+                    <a id="downloadLink" class="download-btn">Download Converted File</a>
+                </div>
+                <button id="convertAnother" class="retry-btn" onclick="location.reload()" style="margin-top: 1rem;">Convert Another File</button>
+            </div>
+        </div>
+
+        <div class="loading" id="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>Converting... Please wait</p>
+        </div>
+    </div>
 
     <footer>
-      <p>This converter works entirely in your browser. Your files are never uploaded to any server.</p>
+        <p>Browser-based audio conversion. Your files never leave your device.</p>
     </footer>
-  </div>
 
-  <script src="script.js" type="module"></script>
+    <script src="script.js"></script>
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"4c6229722a6346bc8eb5cb0e5eae5d41","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
-
